@@ -25,9 +25,9 @@
       <div class="book-card-wrapper">
         <div class="book-card">
           <div class="book-info">
-            <div class="book-title">Title</div>
-            <div class="book-author">Author</div>
-            <div class="book-pages">Pages!</div>
+            <div class="book-title">Add your first book to get started!</div>
+            <div class="book-author"></div>
+            <div class="book-pages"></div>
           </div>
           <div class="book-buttons">
             <button>
@@ -50,18 +50,18 @@
     </div>
     <div class="add-book subheader">
       <div class="add-book-header">Add Book</div>
-      <form action="" method="post">
+      <div class="form-div">
         <div class="input-wrapper">
           <label for="author">Author</label>
-          <input type="text" name="author" />
+          <input type="text" name="author" id="author" />
         </div>
         <div class="input-wrapper">
           <label for="title">Title</label>
-          <input type="text" name="title" />
+          <input type="text" name="title" id="title" />
         </div>
         <div class="input-wrapper">
           <label for="pages">Pages</label>
-          <input type="number" name="pages" />
+          <input type="number" name="pages" id="pages" />
         </div>
         <div class="input-wrapper">
           <label for="read">Read</label>
@@ -71,8 +71,8 @@
           <label for="favorite">Favorite</label>
           <input type="checkbox" name="favorite" id="favorite" />
         </div>
-        <button type="submit" onClick="submitBook">Add</button>
-      </form>
+        <button type="submit" onclick="submitBook()">Add</button>
+      </div>
     </div>
     <script src="./main.js"></script>
   </body>

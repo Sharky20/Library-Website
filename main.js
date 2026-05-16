@@ -1,10 +1,18 @@
-const myLibrary = [];
+let myLibrary = [];
 
 const booksWrapper = document.querySelector(".book-card-wrapper");
 const starEmpty = "./images/star.png";
 const starFull = "./images/star-full.png";
 const unreadIcon = "./images/eye.svg";
 const isreadIcon = "./images/check-mark.png";
+
+const authorInput = document.querySelector("#author");
+const titleInput = document.querySelector("#title");
+const pagesInput = document.querySelector("#pages");
+/** @type {HTMLInputElement} */
+const isReadInput = document.querySelector("#read");
+/** @type {HTMLInputElement} */
+const isFavoriteInput = document.querySelector("#favorite");
 
 function Book(title, author, pages, isRead, isFavorited) {
   if (!new.target) {
@@ -19,6 +27,21 @@ function Book(title, author, pages, isRead, isFavorited) {
   this.info = function () {
     return `${title} by ${author}, ${pages} pages, ${isRead ? "has been read" : "not read yet"}`;
   };
+}
+
+function submitBook() {
+  let title = titleInput.value;
+  let author = authorInput.value;
+  let pages = pagesInput.value;
+  if (title == "" || author == "" || pages == "") return;
+  titleInput.value = "";
+  authorInput.value = "";
+  pagesInput.value = "";
+  let isRead = isReadInput.checked;
+  isReadInput.checked = false;
+  let isFavorited = isFavoriteInput.checked;
+  isFavoriteInput.checked = false;
+  addBookToLibrary(title, author, pages, isRead, isFavorited);
 }
 
 function addBookToLibrary(title, author, pages, isRead, isFavorited) {
@@ -46,10 +69,15 @@ function displayBooks() {
     let pages = document.createElement("div");
     pages.classList.add("book-pages");
     pages.textContent = book.pages;
+    let uuid = document.createElement("div");
+    uuid.classList.add("uuid");
+    uuid.hidden = true;
+    uuid.textContent = book.id;
 
     infoWrapper.appendChild(title);
     infoWrapper.appendChild(author);
     infoWrapper.appendChild(pages);
+    infoWrapper.appendChild(uuid);
 
     let buttonsWrapper = document.createElement("div");
     buttonsWrapper.classList.add("book-buttons");
@@ -83,9 +111,37 @@ function displayBooks() {
 }
 
 function removeBook(e) {
-  console.log(e);
+  const removeButton = e.target;
+  const parent = removeButton.closest(".book-card");
+  const bookUUID = parent.querySelector(".book-info .uuid");
+  let id = bookUUID.textContent;
+  myLibrary = myLibrary.filter((book) => book.id != id);
+  console.log(myLibrary);
+  displayBooks();
 }
 
-function readBook() {}
+function readBook(e) {
+  const readButton = e.target;
+  const parent = readButton.closest(".book-card");
+  const bookUUID = parent.querySelector(".book-info .uuid");
+  let id = bookUUID.textContent;
+  myLibrary.forEach((book) => {
+    if (book.id == id) {
+      book.isRead ? (book.isRead = false) : (book.isRead = true);
+    }
+  });
+  displayBooks();
+}
 
-function favoriteBook() {}
+function favoriteBook(e) {
+  const favButton = e.target;
+  const parent = favButton.closest(".book-card");
+  const bookUUID = parent.querySelector(".book-info .uuid");
+  let id = bookUUID.textContent;
+  myLibrary.forEach((book) => {
+    if (book.id == id) {
+      book.isFavorited ? (book.isFavorited = false) : (book.isFavorited = true);
+    }
+  });
+  displayBooks();
+}
