@@ -14,19 +14,18 @@ const isReadInput = document.querySelector("#read");
 /** @type {HTMLInputElement} */
 const isFavoriteInput = document.querySelector("#favorite");
 
-function Book(title, author, pages, isRead, isFavorited) {
-  if (!new.target) {
-    throw Error("need to use 'new' operator");
+class Book {
+  constructor(title, author, pages, isRead, isFavorited) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.isRead = isRead;
+    this.isFavorited = isFavorited;
+    this.id = crypto.randomUUID();
   }
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.isRead = isRead;
-  this.isFavorited = isFavorited;
-  this.id = crypto.randomUUID();
-  this.info = function () {
-    return `${title} by ${author}, ${pages} pages, ${isRead ? "has been read" : "not read yet"}`;
-  };
+  info() {
+    return `${this.title} by ${this.author}, ${this.pages} pages, ${this.isRead ? "has been read" : "not read yet"}`;
+  }
 }
 
 function submitBook() {
